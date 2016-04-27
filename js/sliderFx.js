@@ -4,12 +4,12 @@
  *
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
- * 
+ *
  * Copyright 2014, Codrops
  * http://www.codrops.com
  */
 ;( function( window ) {
-	
+
 	'use strict';
 
 	var Modernizr = window.Modernizr,
@@ -24,7 +24,7 @@
 		support = { csstransitions : Modernizr.csstransitions };
 
 	function extend( a, b ) {
-		for( var key in b ) { 
+		for( var key in b ) {
 			if( b.hasOwnProperty( key ) ) {
 				a[key] = b[key];
 			}
@@ -48,8 +48,8 @@
 		// path definitions
 		paths : {
 			rect : 'M33,0h41c0,0,0,9.871,0,29.871C74,49.871,74,60,74,60H32.666h-0.125H6c0,0,0-10,0-30S6,0,6,0H33',
-			curve : { 
-				right : 'M33,0h41c0,0,5,9.871,5,29.871C79,49.871,74,60,74,60H32.666h-0.125H6c0,0,5-10,5-30S6,0,6,0H33', 
+			curve : {
+				right : 'M33,0h41c0,0,5,9.871,5,29.871C79,49.871,74,60,74,60H32.666h-0.125H6c0,0,5-10,5-30S6,0,6,0H33',
 				left : 'M33,0h41c0,0-5,9.871-5,29.871C69,49.871,74,60,74,60H32.666h-0.125H6c0,0-5-10-5-30S6,0,6,0H33'
 			}
 		}
@@ -102,7 +102,7 @@
 					return frag;
 				}
 
-			this.navPrev = addArrow( 'prev', '&lt;', true );
+			this.navPrev = addArrow( 'prev', '&lt;' );
 			this.navNext = addArrow( 'next', '&gt;' );
 			this.el.appendChild( nav );
 
@@ -110,7 +110,7 @@
 			this.items.forEach( function( item ) {
 				var svg = createSvg('<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="' + self.options.paths.rect + '"/></svg>');
 				item.insertBefore( svg, item.childNodes[0] );
-				
+
 				var s = Snap( item.querySelector('svg') );
 				item.path = s.select( 'path' );
 			} );
@@ -122,7 +122,7 @@
 		if( this.itemsCount > 1 ) {
 			this.navPrev.addEventListener( 'click', function() { self._navigate( 'prev' ) } );
 			this.navNext.addEventListener( 'click', function() { self._navigate( 'next' ) } );
-			
+
 			var transitionendfn = function() { self.isAnimating = false; };
 			if( support ) {
 				self.itemsList.addEventListener( transEndEventName, transitionendfn );
@@ -150,7 +150,7 @@
 
 	SliderFx.prototype._navigate = function( dir ) {
 		// do nothing if the itemsList is currently moving
-		if( this.isAnimating || dir === 'next' && this.curr >= this.itemsCount - 1 || dir === 'prev' && this.curr <= 0 ) {
+		if( this.isAnimating ) {
 			return false;
 		}
 		this.isAnimating = true;
@@ -163,6 +163,12 @@
 		else if( dir === 'prev' && this.curr > 0 ) {
 			--this.curr;
 		}
+		else if( dir === 'prev' && this.curr <= 0 ) {
+			this.curr = this.itemsCount - 1;
+		}
+		else if( dir === 'next' && this.curr >= this.itemsCount - 1 ) {
+			this.curr = 0;
+		}
 		// slide
 		this._slide();
 	}
@@ -171,7 +177,7 @@
 		var self = this,
 			startSlider = function() {
 				// check which navigation arrows should be shown
-				self._toggleNavControls();
+				// self._toggleNavControls();
 				// translate value
 				var translateVal = -1 * self.curr * 100 / self.itemsCount;
 				self.itemsList.style.WebkitTransform = 'translate3d(' + translateVal + '%,0,0)';
@@ -194,7 +200,7 @@
 
 		// the slider starts a bit later...
 		setTimeout(function() { callback.call(); }, speed * .2 );
-		
+
 		// change svg path on entering slide to "curved"
 		var currItem = this.items[ this.curr ];
 		currItem.querySelector('path').setAttribute( 'd', dir === 'right' ? pathCurvedLeft : pathCurvedRight );
