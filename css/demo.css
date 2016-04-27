@@ -22,13 +22,13 @@ body {
 }
 
 a {
-	color: #c94e50;
+	color: #fffce1;
 	text-decoration: none;
 	outline: none;
 }
 
 a:hover, a:focus {
-	color: #4681a0;
+	color: #fdf4a5;
 	outline: none;
 }
 
@@ -150,6 +150,10 @@ section {
 
 	.codrops-icon span {
 		display: none;
+	}
+
+	.slide {
+		overflow: auto;
 	}
 
 }
