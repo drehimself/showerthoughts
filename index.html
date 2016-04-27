@@ -11,8 +11,10 @@
 		<link rel="shortcut icon" href="img/favicon.ico">
 		<link href='http://fonts.googleapis.com/css?family=Flamenco' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
 		<link rel="stylesheet" type="text/css" href="css/slideshow.css" />
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 		<script src="js/snap.svg-min.js"></script>
 		<script src="js/modernizr.custom.js"></script>
 		<!--[if IE]>
@@ -25,6 +27,7 @@
 				<ul>
 				</ul>
 			</div> <!-- /slideshow -->
+			<span class="fa fa-info-circle"></span>
 		</div><!-- /container -->
 
 		<script id="quote-template" type="text/x-handlebars-template">
@@ -41,14 +44,23 @@
 		  </li>
 		</script>
 
+		<div id="modal-text" style="display:none">
+			<p>Made with <i class="fa fa-heart"></i> by <a href="http://andremadarang.com" target="_blank">Andre Madarang</a>. <br>
+			Fork me on <a href="https://github.com/drehimself/showerthoughts" target="_blank">GitHub</a>.</p>
+			<p>A little app that pulls from the Reddit API and displays the info in a slider format. I thought the <a href="http://reddit.com/r/showerthoughts" target="_blank">Shower Thoughts subreddit</a> was perfect for this. Slider is based on this <a href="http://tympanus.net/codrops/?p=20714" target="_blank">Codrops article</a>.</p>
+		</div>
+
 
 		<script src="js/classie.js"></script>
 		<script src="js/sliderFx.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 		<script>
 			(function() {
+
+				// AJAX call to reddit api
 				var url = "https://www.reddit.com/r/showerthoughts.json";
 
 				$.getJSON( url, function( data ) {
@@ -67,9 +79,19 @@
 				  	}
 				  });
 
+				  // init slider
 				  new SliderFx( document.getElementById('slideshow'), {
 					easing : 'cubic-bezier(.8,0,.2,1)'
 				  } );
+
+				  // modal
+				  $("span.fa").on("click", function() {
+				    swal({
+				      title: "",
+				      text: $('#modal-text').html(),
+				      html: true
+				    });
+				  });
 
 				});
 			})();

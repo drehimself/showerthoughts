@@ -32,6 +32,18 @@ a:hover, a:focus {
 	outline: none;
 }
 
+.sweet-alert a {
+	color: #0072c6;
+}
+
+.sweet-alert a:hover {
+	color: #0593FC;
+}
+
+.sweet-alert p {
+	margin-bottom: 10px;
+}
+
 button:focus {
 	outline: none;
 }
@@ -128,6 +140,22 @@ section {
 	padding: 0.5em 0;
 	max-width: 300px;
 	text-align: left;
+}
+
+span.fa {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	font-size: 30px;
+}
+
+span.fa:hover {
+	color: lightgray;
+	cursor: pointer;
+}
+
+.fa-heart {
+	color: #F17677;
 }
 
 @media screen and (max-width: 40em) {
